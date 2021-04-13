@@ -32,3 +32,10 @@
     cache_valid_time={{linux_add_packages_cache_valid_time}}
   with_items: "{{ linux_add_packages_names | default([])}}"
   when: linux_add_packages_names is defined and not (linux_add_packages_names is none or linux_add_packages_names | trim == '')
+
+- name: Prevent packages from being upgraded
+  dpkg_selections:
+    name: "{{ item.name.split('=')[0] }}"
+    selection: hold
+  with_items: "{{ linux_add_packages_names | default([])}}"
+  when: linux_add_packages_names is defined and not (linux_add_packages_names is none or linux_add_packages_names | trim == '')

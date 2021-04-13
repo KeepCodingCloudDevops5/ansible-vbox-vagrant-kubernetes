@@ -14,9 +14,11 @@ k8s_common_add_packages_names:
 - name: docker-ce
 - name: docker-ce-cli 
 - name: containerd.io
-- name: kubeadm 
-- name: kubelet 
-- name: kubectl
+- name: nfs-common
+- name: "kubelet={{ k8s_version }}-00" 
+- name: "kubectl={{ k8s_version }}-00"
+- name: "kubeadm={{ k8s_version }}-00"
+
 
 k8s_common_remove_packages_names:
 - name: 

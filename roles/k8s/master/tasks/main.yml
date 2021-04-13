@@ -7,8 +7,10 @@
 
 - name: Create .kube dir for {{ k8s_master_admin_user }} user
   file:
-      path: "/home/{{ k8s_master_admin_user }}/.kube"
-      state: directory
+    path: "/home/{{ k8s_master_admin_user }}/.kube"
+    state: directory
+    owner: "{{ k8s_master_admin_user }}"
+    group: "{{ k8s_master_admin_group }}"
 
 - name: Copy kube config to {{ k8s_master_admin_user }} home .kube dir 
   copy:
@@ -38,3 +40,10 @@
 - name: Copy join command for {{ k8s_cluster_name }} cluster to local file
   become: false
   local_action: copy content="{{ join_command.stdout_lines[0] }}" dest="./{{ k8s_cluster_name }}-join-command"
+
+- name: enable autocomplete
+  become: false
+  lineinfile:
+    path: /home/{{ k8s_master_admin_user }}/.bashrc
+    line: "source <(kubectl completion bash)"
+

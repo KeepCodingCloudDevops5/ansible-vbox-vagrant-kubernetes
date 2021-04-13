@@ -1,11 +1,13 @@
-IMAGE_NAME = "bento/ubuntu-20.04"
+#IMAGE_NAME = "bento/ubuntu-20.04"
+IMAGE_NAME = "ubuntu/bionic64"
 K8S_NAME = "ditwl-k8s-01"
+K8S_VERSION = "1.20.5"
 MASTERS_NUM = 1
 MASTERS_CPU = 2 
 MASTERS_MEM = 2048
 
-NODES_NUM = 3
-NODES_CPU = 4
+NODES_NUM = 2
+NODES_CPU = 2
 NODES_MEM = 2048
 
 IP_BASE = "192.168.50."
@@ -33,7 +35,8 @@ Vagrant.configure("2") do |config|
                     k8s_master_admin_group: "vagrant",
                     k8s_master_apiserver_advertise_address: "#{IP_BASE}#{i + 10}",
                     k8s_master_node_name: "k8s-m-#{i}",
-                    k8s_node_public_ip: "#{IP_BASE}#{i + 10}"
+                    k8s_node_public_ip: "#{IP_BASE}#{i + 10}",
+                    k8s_version: K8S_VERSION
                 }                
             end
         end
@@ -55,7 +58,8 @@ Vagrant.configure("2") do |config|
                     k8s_cluster_name:     K8S_NAME,
                     k8s_node_admin_user:  "vagrant",
                     k8s_node_admin_group: "vagrant",
-                    k8s_node_public_ip: "#{IP_BASE}#{j + 10 + MASTERS_NUM}"
+                    k8s_node_public_ip: "#{IP_BASE}#{j + 10 + MASTERS_NUM}",
+                    k8s_version: K8S_VERSION
                 }
             end
         end
